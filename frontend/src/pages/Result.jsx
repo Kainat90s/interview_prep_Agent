@@ -26,7 +26,8 @@ export default function Result() {
     }
     
     try {
-      const response = await fetch(`http://localhost:8000/api/download-report/${sessionId}`);
+      const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000';
+      const response = await fetch(`${API_BASE}/api/download-report/${sessionId}`);
       if (!response.ok) throw new Error('Failed to download PDF');
       
       const blob = await response.blob();

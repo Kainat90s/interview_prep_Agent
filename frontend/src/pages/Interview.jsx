@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { submitAnswer } from '../services/api'
 
-// Since we are hitting the python backend directly:
-const API_BASE_URL = 'http://localhost:8000/api'
+// Use the deployed API base URL if available, otherwise fallback to localhost
+const API_BASE_URL = (import.meta.env.VITE_API_BASE || 'http://localhost:8000') + '/api'
 
 export default function Interview() {
   const navigate = useNavigate()

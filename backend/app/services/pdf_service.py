@@ -125,8 +125,9 @@ def generate_pdf_report(session_data: dict) -> str:
     # -----------------------------
     # SAVE PDF
     # -----------------------------
+    import tempfile
     reports_dir = os.path.join(
-        os.path.dirname(__file__),
+        tempfile.gettempdir(),
         "reports"
     )
     os.makedirs(reports_dir, exist_ok=True)

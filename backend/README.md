@@ -1,3 +1,8 @@
-# AI Interview Prep - Backend
-
-Minimal backend scaffold for the AI Interview Prep project.
+---
+title: Interview Backend
+emoji: 🚀
+colorFrom: blue
+colorTo: green
+sdk: docker
+pinned: false
+---
