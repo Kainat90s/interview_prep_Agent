@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { TrophyIcon, DocumentIcon, ArrowRightIcon } from '../components/Icons'
 
 export default function Result() {
   const location = useLocation()
@@ -12,9 +13,9 @@ export default function Result() {
   const normalizedScore = Math.min((scorecard / 5) * 100, 100)
   
   const getScoreInfo = (score) => {
-    if (score >= 4) return { label: 'Excellent', color: '#34d399' }
-    if (score >= 3) return { label: 'Good', color: '#fbbf24' }
-    return { label: 'Needs Improvement', color: '#f87171' }
+    if (score >= 4) return { label: 'Excellent', color: '#10b981' }
+    if (score >= 3) return { label: 'Good', color: '#f59e0b' }
+    return { label: 'Needs Improvement', color: '#ef4444' }
   }
   
   const info = getScoreInfo(scorecard)
@@ -48,7 +49,9 @@ export default function Result() {
   return (
     <div className="page fade-in page-center">
       <div className="card result-page slide-up">
-        <div style={{ fontSize: '4rem', marginBottom: '1rem', animation: 'slideUp 0.8s ease-out' }}>🏆</div>
+        <div className="result-icon-badge">
+          <TrophyIcon size={40} />
+        </div>
         <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.5rem' }}>Interview Complete!</h1>
         <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
           Great job! Here is the overall evaluation of your performance for the <strong>{jobRole}</strong> role.
@@ -59,8 +62,8 @@ export default function Result() {
             <svg viewBox="0 0 36 36" style={{ width: '100%', height: '100%' }}>
               <defs>
                 <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#6366f1" />
-                  <stop offset="100%" stopColor="#a78bfa" />
+                  <stop offset="0%" stopColor="#4f46e5" />
+                  <stop offset="100%" stopColor="#818cf8" />
                 </linearGradient>
               </defs>
               <path
@@ -88,11 +91,12 @@ export default function Result() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '300px', margin: '0 auto' }}>
-          <button className="btn btn-primary" onClick={handleDownload}>
-            📄 Download Full PDF Report
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '320px', margin: '0 auto' }}>
+          <button className="btn btn-primary" onClick={handleDownload} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'center' }}>
+            <DocumentIcon size={18} />
+            Download Full PDF Report
           </button>
-          <Link to="/" className="btn btn-secondary">
+          <Link to="/" className="btn btn-secondary" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'center' }}>
             Return Home
           </Link>
         </div>

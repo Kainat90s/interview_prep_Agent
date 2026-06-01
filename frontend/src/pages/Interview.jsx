@@ -1,6 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { submitAnswer } from '../services/api'
+import { 
+  BriefcaseIcon, 
+  PaperclipIcon, 
+  DocumentIcon, 
+  CheckIcon, 
+  BulbIcon, 
+  SendIcon, 
+  SpinnerIcon, 
+  RocketIcon 
+} from '../components/Icons'
 
 // Use the deployed API base URL if available, otherwise fallback to localhost
 const API_BASE_URL = (import.meta.env.VITE_API_BASE || 'http://localhost:8000') + '/api'
@@ -125,7 +134,6 @@ export default function Interview() {
         }, 1000)
       } else {
         setTimeout(() => {
-          // You could pass the score via state to the result page
           navigate('/result', { state: { score: data.overall_session_score, sessionId: sessionId, jobRole: jobRole } })
         }, 2000)
       }
@@ -137,14 +145,14 @@ export default function Interview() {
   }
 
   const getScoreStyle = (score) => {
-    if (score >= 4) return { color: '#34d399' }
-    if (score >= 3) return { color: '#fbbf24' }
-    return { color: '#f87171' }
+    if (score >= 4) return { color: '#10b981', borderColor: 'rgba(16, 185, 129, 0.2)', background: 'rgba(16, 185, 129, 0.05)' }
+    if (score >= 3) return { color: '#f59e0b', borderColor: 'rgba(245, 158, 11, 0.2)', background: 'rgba(245, 158, 11, 0.05)' }
+    return { color: '#ef4444', borderColor: 'rgba(239, 68, 68, 0.2)', background: 'rgba(239, 68, 68, 0.05)' }
   }
 
   return (
     <div className="page fade-in page-center" style={sessionStarted ? { padding: '1rem' } : {}}>
-      <div className={sessionStarted ? "chat-container" : "card slide-up"} style={sessionStarted ? { maxWidth: '820px', width: '100%', height: 'calc(100vh - 120px)' } : { maxWidth: '600px', width: '100%' }}>
+      <div className={sessionStarted ? "chat-container" : "card slide-up"} style={sessionStarted ? { maxWidth: '860px', width: '100%', height: 'calc(100vh - 180px)' } : { maxWidth: '600px', width: '100%' }}>
         
         {!sessionStarted ? (
           <div>
@@ -153,7 +161,7 @@ export default function Interview() {
               Configure your interview parameters to begin.
             </p>
             
-            {error && <div className="error-box">{error}</div>}
+            {error && <div className="error-box"><span>⚠️</span> {error}</div>}
             
             <form onSubmit={handleStart}>
               <div className="form-group">
@@ -191,12 +199,13 @@ export default function Interview() {
                     onChange={(e) => setResume(e.target.files[0])}
                   />
                   {resume ? (
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
-                      <span style={{ fontWeight: 600, color: 'var(--success)' }}>📎 {resume.name}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem' }}>
+                      <PaperclipIcon size={20} style={{ color: 'var(--success)' }} />
+                      <span style={{ fontWeight: 650, color: 'var(--success)' }}>{resume.name}</span>
                     </div>
                   ) : (
                     <div style={{ color: 'var(--text-muted)' }}>
-                      <span style={{ fontSize: '1.5rem', display: 'block', marginBottom: '0.5rem' }}>📄</span>
+                      <DocumentIcon className="upload-zone-icon" size={32} style={{ display: 'block', margin: '0 auto 0.75rem' }} />
                       <strong>Click to upload</strong> or drag and drop<br/>
                       <small>PDF or DOCX</small>
                     </div>
@@ -204,15 +213,28 @@ export default function Interview() {
                 </div>
               </div>
               
-              <button type="submit" className="btn btn-primary" disabled={loading} style={{ marginTop: '1rem' }}>
-                {loading ? '⏳ Generating 10 Questions...' : '🚀 Launch Interview'}
+              <button type="submit" className="btn btn-primary" disabled={loading} style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem', alignItems: 'center', justifyContent: 'center' }}>
+                {loading ? (
+                  <>
+                    <SpinnerIcon size={18} />
+                    Generating 10 Questions...
+                  </>
+                ) : (
+                  <>
+                    <RocketIcon size={18} />
+                    Launch Interview
+                  </>
+                )}
               </button>
             </form>
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }} className="slide-up">
             <div className="chat-header">
-              <div className="role-badge">💼 {jobRole}</div>
+              <div className="role-badge">
+                <BriefcaseIcon size={15} />
+                {jobRole}
+              </div>
               <div className="question-counter">
                 Q{currentQuestionData?.question_number || 1} / 10
               </div>
@@ -236,7 +258,10 @@ export default function Interview() {
                   
                   {msg.type === 'feedback' && (
                     <div className="feedback-card scale-in">
-                      <h4>✅ Feedback</h4>
+                      <h4>
+                        <CheckIcon size={16} />
+                        Feedback
+                      </h4>
                       <div className="scores-row">
                         <div className="score-badge" style={getScoreStyle(msg.evaluation.clarity_score)}>
                           Clarity: {msg.evaluation.clarity_score}/5
@@ -249,7 +274,8 @@ export default function Interview() {
                         </div>
                       </div>
                       <p className="tip">
-                        <span className="tip-icon">💡</span> {msg.evaluation.feedback}
+                        <BulbIcon className="tip-icon" size={18} />
+                        {msg.evaluation.feedback}
                       </p>
                     </div>
                   )}
@@ -280,7 +306,7 @@ export default function Interview() {
                 }}
               />
               <button type="submit" disabled={!currentInput.trim() || loading} className="send-btn">
-                Send ➤
+                {loading ? <SpinnerIcon size={18} /> : <SendIcon size={18} />}
               </button>
             </form>
           </div>
