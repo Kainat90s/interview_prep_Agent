@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import BotChat from './components/BotChat'
 import Home from './pages/Home'
 import Interview from './pages/Interview'
 import Result from './pages/Result'
@@ -18,6 +19,7 @@ export default function App(){
             <Route path="/result" element={<Result/>} />
           </Routes>
         </main>
+        <BotChat />
         <Footer />
       </div>
     </BrowserRouter>

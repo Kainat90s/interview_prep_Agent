@@ -34,6 +34,7 @@ def list_sessions(db: Session = Depends(get_db)):
 @router.post("/api/start-session")
 async def start_session(
     job_role: str = Form(...),
+    user_email: Optional[str] = Form(None),
     job_description: Optional[str] = Form(None),
     resume: Optional[UploadFile] = File(None),
     db: Session = Depends(get_db)
@@ -49,6 +50,7 @@ async def start_session(
     # 2. Create session in DB
     db_session = SessionModel(
         job_role=job_role,
+        user_email=user_email,
         job_description=job_description,
         resume_text=resume_text,
         is_complete=False,

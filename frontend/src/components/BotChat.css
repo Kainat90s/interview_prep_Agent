@@ -1,0 +1,33 @@
+.bot-toggle {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: #4f46e5; /* Indigo 600 */
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  z-index: 1000; /* ensure clickable */
+}
+.bot-toggle:hover {
+  background: #4338ca; /* darker indigo */
+  transform: translateY(-2px);
+}
+
+.bot-iframe {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 5.5rem; /* above button */
+  width: 360px;
+  height: 500px;
+  border: 1px solid #e2e8f0; /* Slate 200 */
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.04), 0 8px 10px -6px rgba(0,0,0,0.04);
+  background: #fff;
+  z-index: 1000;
+}

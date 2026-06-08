@@ -19,6 +19,7 @@ export default function Interview() {
   
   // Setup state
   const [jobRole, setJobRole] = useState('')
+  const [userEmail, setUserEmail] = useState('')
   const [jobDescription, setJobDescription] = useState('')
   const [resume, setResume] = useState(null)
   
@@ -32,11 +33,14 @@ export default function Interview() {
   const [messages, setMessages] = useState([])
   const [currentInput, setCurrentInput] = useState('')
   const [currentQuestionData, setCurrentQuestionData] = useState(null)
+  const chatMessagesRef = useRef(null)
   const messagesEndRef = useRef(null)
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   const handleStart = async (e) => {
     e.preventDefault()
@@ -48,6 +52,7 @@ export default function Interview() {
       const formData = new FormData()
       formData.append('job_role', jobRole)
       formData.append('job_description', jobDescription)
+      formData.append('user_email', userEmail)
       if (resume) {
         formData.append('resume', resume)
       }
@@ -163,20 +168,31 @@ export default function Interview() {
             
             {error && <div className="error-box"><span>⚠️</span> {error}</div>}
             
-            <form onSubmit={handleStart}>
-              <div className="form-group">
-                <label className="form-label" htmlFor="jobRole">Job Role Target <span style={{color: 'red'}}>*</span></label>
-                <input 
-                  type="text" 
-                  id="jobRole"
-                  className="form-input"
-                  placeholder="e.g. Backend Engineer, Data Scientist"
-                  value={jobRole}
-                  onChange={(e) => setJobRole(e.target.value)}
-                  required
-                />
-              </div>
-
+        <form onSubmit={handleStart}>
+          <div className="form-group">
+            <label className="form-label" htmlFor="userEmail">Your Email <span style={{color: 'red'}}>*</span></label>
+            <input
+              type="email"
+              id="userEmail"
+              className="form-input"
+              placeholder="e.g. you@gmail.com"
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
+              required
+            />
+          </div>
+            <div className="form-group">
+              <label className="form-label" htmlFor="jobRole">Job Role Target <span style={{color: 'red'}}>*</span></label>
+              <input 
+                type="text" 
+                id="jobRole"
+                className="form-input"
+                placeholder="e.g. Backend Engineer, Data Scientist"
+                value={jobRole}
+                onChange={(e) => setJobRole(e.target.value)}
+                required
+              />
+            </div>
               <div className="form-group">
                 <label className="form-label" htmlFor="jobDescription">Job Description (Optional)</label>
                 <textarea 

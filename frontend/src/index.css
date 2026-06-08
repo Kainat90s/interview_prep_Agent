@@ -3,12 +3,12 @@
 :root {
   --bg-primary: #f8fafc;
   --bg-secondary: #ffffff;
-  --bg-card: #ffffff;
-  --accent-1: #4f46e5;
-  --accent-2: #6366f1;
-  --accent-3: #818cf8;
-  --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #818cf8 100%);
-  --accent-glow: rgba(79, 70, 229, 0.08);
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --accent-1: #0d9488; /* teal-600 */
+  --accent-2: #14b8a6; /* teal-500 */
+  --accent-3: #5eead4; /* teal-300 */
+  --accent-gradient: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #5eead4 100%);
+  --accent-glow: rgba(13, 148, 136, 0.08);
   --text-main: #0f172a;
   --text-muted: #475569;
   --text-dim: #64748b;
@@ -26,8 +26,45 @@
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
-  --shadow-glow: 0 0 30px rgba(79, 70, 229, 0.05);
+  --shadow-glow: 0 0 30px rgba(13, 148, 136, 0.05);
 }
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fadeIn { animation: fadeIn 0.6s ease-out forwards; }
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.slide-up { animation: slideUp 0.5s ease-out forwards; }
+
+/* Glassmorphism card */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+/* Button enhancements */
+.btn-primary {
+  background: var(--accent-gradient);
+  color: white;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13, 148, 136, 0.35);
+}
+
+/* Adjust existing component classes to use glass effect where appropriate */
+.card { composes: glass-card; }
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -198,7 +235,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 3rem;
-  padding: 2.5rem 0 4rem;
+  padding: 1rem 0 4rem; /* reduced top padding to close gap */
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -723,7 +760,10 @@ body {
   border: 1px solid var(--border-color);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
-  position: relative;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 70px;
   z-index: 10;
 }
 

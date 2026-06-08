@@ -56,6 +56,7 @@ class Session(Base):
     )
 
     job_role = Column(String, nullable=False)
+    user_email = Column(String, nullable=True)
 
     job_description = Column(Text)
 

@@ -130,7 +130,7 @@ export default function Home() {
             {sessions.map((s, i) => (
               <li key={i} className="session-item">
                 <div>
-                  <span className="session-meta-role">💼 {s.job_role || 'General'}</span>
+                  <span className="session-meta-role">{s.job_role || 'General'}</span>
                   <span className="session-meta-id">ID: {s.id}</span>
                 </div>
                 {s.overall_score && (
